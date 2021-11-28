@@ -3,7 +3,7 @@ Toggle paired buffers (ex; production code and test code) quickly based rules th
 
 ## Installation
 
-You can install via ELPA, or manually by downloading `ruled-toggle` and adding the following to your init file:
+Manually by downloading `ruled-toggle` and adding the following to your init file:
 
 ```elisp
 (add-to-list 'load-path "/path/to/ruled-toggle")
