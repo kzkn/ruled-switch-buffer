@@ -28,14 +28,14 @@
 ;; to the defined rules.
 ;;
 ;; For example, you may have rules to switch between .c and .h files,
-;; or between production code and test code. You define the rules
-;; yourself. This library does not provide any specific rules.
+;; or between production code and test code.  You define the rules
+;; yourself.  This library does not provide any specific rules.
 ;;
 ;; In some cases, a file may be associated with more than one
-;; file. For example, foo.h and foo_test.c are candidates for the file
-;; foo.c. The rule should be to list all possible candidate file
-;; paths. The library will extract only the file paths that exist from
-;; all the file paths enumerated by the rule. If multiple candidates
+;; file.  For example, foo.h and foo_test.c are candidates for the file
+;; foo.c.  The rule should be to list all possible candidate file
+;; paths.  The library will extract only the file paths that exist from
+;; all the file paths enumerated by the rule.  If multiple candidates
 ;; still remain, it will ask you for the file to go to.
 
 ;;; Code:
@@ -47,7 +47,7 @@
   :group 'convenience)
 
 (defcustom ruled-toggle-completing-read-fn 'completing-read
-  "Function for completing read for choose a file name. "
+  "Function for completing read for choose a file name."
   :type 'function
   :group 'ruled-toggle)
 
