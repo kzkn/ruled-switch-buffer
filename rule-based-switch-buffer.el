@@ -1,7 +1,8 @@
 (require 'cl-lib)
 
 (defgroup rule-based-switch-buffer nil
-  "Rule based switch buffer framework.")
+  "Rule based switch buffer framework."
+  :group 'convenience)
 
 (defcustom rule-based-switch-buffer-completing-read-fn 'completing-read
   "Function for completing read for choose a file name. "
