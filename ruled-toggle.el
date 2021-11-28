@@ -106,7 +106,7 @@
      t))
 
 ;;;###autoload
-(defun ruled-toggle ()
+(defun ruled-toggle-buffer ()
   (interactive)
   (let* ((file-name (buffer-file-name))
          (candidate-file-names (ruled-toggle--switch-buffer-candidates file-name))

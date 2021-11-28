@@ -50,7 +50,7 @@ First, you must write rules. Here is some examples:
   :mappers (lambda (fn) (replace-regexp-in-string "\\.html.erb$" ".rb" fn)))
 ```
 
-Once the rules are ready, open any file and execute `M-x ruled-toggle`.
+Once the rules are ready, open any file and execute `M-x ruled-toggle-buffer`.
 If the file name of current buffer matches some rules, a list of
 possible destination files will be displayed and you will be asked to
 select one. If there is only one candidate, it will be selected
@@ -64,6 +64,6 @@ foo.cc
 foo.h
 ```
 
-Execute `M-x ruled-toggle` on `foo.c` or `foo.cc` will open `foo.h` immediately.
+Execute `M-x ruled-toggle-buffer` on `foo.c` or `foo.cc` will open `foo.h` immediately.
 
-Execute `M-x ruled-toggle` on `foo.h` will ask you to choice whether to open `foo.c` or `foo.cc`.
+Execute `M-x ruled-toggle-buffer` on `foo.h` will ask you to choice whether to open `foo.c` or `foo.cc`.
