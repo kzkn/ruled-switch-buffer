@@ -1,15 +1,31 @@
-# Emacs Rule Based Switch Buffer Framework
+# Rule Based Toggle Buffers for Emacs
 Toggle paired buffers (ex; production code and test code) quickly based rules that written by yourself.
 
 ## Installation
 
-WIP
+You can install via ELPA, or manually by downloading `ruled-toggle` and adding the following to your init file:
+
+```elisp
+(add-to-list 'load-path "/path/to/ruled-toggle")
+(require ruled-toggle)
+```
 
 ## Usage
 
 First, you must write rules. Here is some examples:
 
 ```elisp
+;; rules for c/c++
+(ruled-toggle-define h-to-c
+  :matcher (lambda (fn) (string-match ".h$" fn))
+  :mappers ((lambda (fn) (replace-regexp-in-string "\\.h$" ".c" fn))
+            (lambda (fn) (replace-regexp-in-string "\\.h$" ".cc" fn))
+            (lambda (fn) (replace-regexp-in-string "\\.h$" ".cxx" fn))))
+
+(ruled-toggle-define c-to-h
+  :matcher (lambda (fn) (string-match ".c\\(c\\|xx\\)?$" fn))
+  :mappers (lambda (fn) (replace-regexp-in-string "\\.c.*$" ".h" fn)))
+
 ;; rules for toggle production code and rspec code
 (ruled-toggle-define app-rb-to-spec-rb
   :matcher (lambda (fn) (string-match "/app/.*.rb$" fn))
@@ -32,17 +48,6 @@ First, you must write rules. Here is some examples:
 (ruled-toggle-define view-component-erb
   :matcher (lambda (fn) (string-match "_component.html.erb$" fn))
   :mappers (lambda (fn) (replace-regexp-in-string "\\.html.erb$" ".rb" fn)))
-
-;; rules for c/c++
-(ruled-toggle-define h-to-c
-  :matcher (lambda (fn) (string-match ".h$" fn))
-  :mappers ((lambda (fn) (replace-regexp-in-string "\\.h$" ".c" fn))
-            (lambda (fn) (replace-regexp-in-string "\\.h$" ".cc" fn))
-            (lambda (fn) (replace-regexp-in-string "\\.h$" ".cxx" fn))))
-
-(ruled-toggle-define c-to-h
-  :matcher (lambda (fn) (string-match ".c\\(c\\|xx\\)?$" fn))
-  :mappers (lambda (fn) (replace-regexp-in-string "\\.c.*$" ".h" fn)))
 ```
 
 Once the rules are ready, open any file and execute `M-x ruled-toggle`.
