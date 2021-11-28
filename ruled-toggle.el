@@ -23,7 +23,20 @@
 
 ;;; Commentary:
 
-;; WIP
+;; This library provides a means to define rules for moving between
+;; related buffers, and commands to switch between buffers according
+;; to the defined rules.
+;;
+;; For example, you may have rules to switch between .c and .h files,
+;; or between production code and test code. You define the rules
+;; yourself. This library does not provide any specific rules.
+;;
+;; In some cases, a file may be associated with more than one
+;; file. For example, foo.h and foo_test.c are candidates for the file
+;; foo.c. The rule should be to list all possible candidate file
+;; paths. The library will extract only the file paths that exist from
+;; all the file paths enumerated by the rule. If multiple candidates
+;; still remain, it will ask you for the file to go to.
 
 ;;; Code:
 
@@ -37,9 +50,6 @@
   "Function for completing read for choose a file name. "
   :type 'function
   :group 'ruled-toggle)
-
-;; ================================================
-;; private
 
 (cl-defstruct ruled-toggle--rule
   name
@@ -87,9 +97,6 @@
       (car candidate-file-names)
     (let ((choices (mapcar #'file-relative-name candidate-file-names)))
       (funcall ruled-toggle-completing-read-fn "Choose: " choices))))
-
-;; ================================================
-;; public
 
 ;;;###autoload
 (cl-defmacro ruled-toggle-define (name &key matcher mappers)
