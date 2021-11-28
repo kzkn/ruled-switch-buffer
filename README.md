@@ -59,5 +59,6 @@ foo.cc
 foo.h
 ```
 
-Execute `M-x ruled-toggle` on foo.c or foo.cc will open foo.h immediately.
-Execute `M-x ruled-toggle` on foo.h will ask you to choice whether to open foo.c or foo.cc.
+Execute `M-x ruled-toggle` on `foo.c` or `foo.cc` will open `foo.h` immediately.
+
+Execute `M-x ruled-toggle` on `foo.h` will ask you to choice whether to open `foo.c` or `foo.cc`.
