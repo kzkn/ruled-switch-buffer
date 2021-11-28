@@ -1,10 +1,10 @@
-;;; rule-based-switch-buffer.el --- Rule based switch buffer framework  -*- lexical-binding: t; -*-
+;;; ruled-toggle.el --- Rule based switch buffer framework  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2021  Kazuki Nishikawa
 
 ;; Author: Kazuki Nishikawa <kzkn@hey.com>
 ;; Keywords: convenience
-;; Homepage: https://github.com/kzkn/rule-based-switch-buffer
+;; Homepage: https://github.com/kzkn/ruled-toggle
 ;; Package-Requires: ((emacs "24.3"))
 ;; Package-Version: 0
 
@@ -29,83 +29,83 @@
 
 (require 'cl-lib)
 
-(defgroup rule-based-switch-buffer nil
+(defgroup ruled-toggle nil
   "Rule based switch buffer framework."
   :group 'convenience)
 
-(defcustom rule-based-switch-buffer-completing-read-fn 'completing-read
+(defcustom ruled-toggle-completing-read-fn 'completing-read
   "Function for completing read for choose a file name. "
   :type 'function
-  :group 'rule-based-switch-buffer)
+  :group 'ruled-toggle)
 
 ;; ================================================
 ;; private
 
-(cl-defstruct rbsb-rule
+(cl-defstruct ruled-toggle--rule
   name
   matcher
   mappers)
 
-(defvar rbsb-rules '())
+(defvar ruled-toggle--rules '())
 
-(defun rbsb-flatten (x)
+(defun ruled-toggle--flatten (x)
   (cl-labels ((rec (x acc)
                    (cond ((null x) acc)
                          ((atom x) (cons x acc))
                          (t (rec (car x) (rec (cdr x) acc))))))
     (rec x nil)))
 
-(defun rbsb-push-rule (name matcher mappers)
-  (let ((rules (cl-remove-if (lambda (rule) (eq name (rbsb-rule-name rule))) rbsb-rules))
-        (rule (make-rbsb-rule
+(defun ruled-toggle--push-rule (name matcher mappers)
+  (let ((rules (cl-remove-if (lambda (rule) (eq name (ruled-toggle--rule-name rule))) ruled-toggle--rules))
+        (rule (make-ruled-toggle--rule
                :name name
                :matcher matcher
                :mappers (if (functionp mappers) (list mappers) mappers))))
-    (setq rbsb-rules (cons rule rules))))
+    (setq ruled-toggle--rules (cons rule rules))))
 
-(defun rbsb-rule-match-p (rule file-name)
-  (funcall (rbsb-rule-matcher rule) file-name))
+(defun ruled-toggle--rule-match-p (rule file-name)
+  (funcall (ruled-toggle--rule-matcher rule) file-name))
 
-(defun rbsb-matched-rules (file-name)
+(defun ruled-toggle--matched-rules (file-name)
   (cl-remove-if-not (lambda (rule)
-                      (rbsb-rule-match-p rule file-name))
-                    rbsb-rules))
+                      (ruled-toggle--rule-match-p rule file-name))
+                    ruled-toggle--rules))
 
-(defun rbsb-mapped-file-names (rule file-name)
+(defun ruled-toggle--mapped-file-names (rule file-name)
   (mapcar (lambda (mapper) (funcall mapper file-name))
-          (rbsb-rule-mappers rule)))
+          (ruled-toggle--rule-mappers rule)))
 
-(defun rbsb-switch-buffer-candidates (file-name)
+(defun ruled-toggle--switch-buffer-candidates (file-name)
   (cl-remove-if-not
    #'file-exists-p
-   (rbsb-flatten
-    (mapcar (lambda (rule) (rbsb-mapped-file-names rule file-name))
-            (rbsb-matched-rules file-name)))))
+   (ruled-toggle--flatten
+    (mapcar (lambda (rule) (ruled-toggle--mapped-file-names rule file-name))
+            (ruled-toggle--matched-rules file-name)))))
 
-(defun rbsb-select-file-name (candidate-file-names)
+(defun ruled-toggle--select-file-name (candidate-file-names)
   (if (<= (length candidate-file-names) 1)
       (car candidate-file-names)
     (let ((choices (mapcar #'file-relative-name candidate-file-names)))
-      (funcall rule-based-switch-buffer-completing-read-fn "Choose: " choices))))
+      (funcall ruled-toggle-completing-read-fn "Choose: " choices))))
 
 ;; ================================================
 ;; public
 
 ;;;###autoload
-(cl-defmacro rule-based-switch-buffer-define (name &key matcher mappers)
+(cl-defmacro ruled-toggle-define (name &key matcher mappers)
   (declare (indent defun))
   `(progn
-     (rbsb-push-rule ',name #',matcher ',mappers)
+     (ruled-toggle--push-rule ',name #',matcher ',mappers)
      t))
 
 ;;;###autoload
-(defun rule-based-switch-buffer ()
+(defun ruled-toggle ()
   (interactive)
   (let* ((file-name (buffer-file-name))
-         (candidate-file-names (rbsb-switch-buffer-candidates file-name))
-         (selected-file-name (rbsb-select-file-name candidate-file-names)))
+         (candidate-file-names (ruled-toggle--switch-buffer-candidates file-name))
+         (selected-file-name (ruled-toggle--select-file-name candidate-file-names)))
     (when selected-file-name
       (find-file selected-file-name))))
 
-(provide 'rule-based-switch-buffer)
-;;; rule-based-switch-buffer.el ends here
+(provide 'ruled-toggle)
+;;; ruled-toggle.el ends here
