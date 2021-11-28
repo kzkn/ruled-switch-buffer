@@ -1,4 +1,4 @@
-;;; ruled-toggle.el --- Rule based switch buffer framework  -*- lexical-binding: t; -*-
+;;; ruled-toggle.el --- Rule Based Toggle Buffers  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2021  Kazuki Nishikawa
 
@@ -43,7 +43,7 @@
 (require 'cl-lib)
 
 (defgroup ruled-toggle nil
-  "Rule based switch buffer framework."
+  "Rule Based Toggle Buffers."
   :group 'convenience)
 
 (defcustom ruled-toggle-completing-read-fn 'completing-read
