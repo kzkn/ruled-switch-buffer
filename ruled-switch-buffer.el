@@ -119,8 +119,7 @@ given file path to the switching target file path"
 
 ;;;###autoload
 (defun ruled-switch-buffer ()
-  "Switch buffer from the current buffer according to the defined
-rules."
+  "Switch buffer from the current buffer according to the defined rules."
   (interactive)
   (let* ((file-name (buffer-file-name))
          (candidate-file-names (ruled-switch-buffer--switch-buffer-candidates file-name))
