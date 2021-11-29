@@ -17,7 +17,7 @@ INIT_PACKAGES="(progn \
 all: compile package-lint clean-elc
 
 package-lint:
-	${EMACS} -Q --eval ${INIT_PACKAGES} -batch -f package-lint-batch-and-exit ruled-toggle.el
+	${EMACS} -Q --eval ${INIT_PACKAGES} -batch -f package-lint-batch-and-exit ruled-switch-buffer.el
 
 compile: clean-elc
 	${EMACS} -Q --eval ${INIT_PACKAGES} -L . -batch -f batch-byte-compile *.el
