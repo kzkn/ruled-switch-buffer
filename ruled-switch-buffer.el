@@ -6,7 +6,7 @@
 ;; Keywords: convenience
 ;; Homepage: https://github.com/kzkn/ruled-switch-buffer
 ;; Package-Requires: ((emacs "24.3"))
-;; Package-Version: 0
+;; Version: 0.1.0
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
