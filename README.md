@@ -3,7 +3,7 @@ Switch paired files (ex; production code and test code) quickly based rules that
 
 ## Installation
 
-Manually by downloading `ruled-switch-buffer` and adding the following to your init file:
+You can install via ELPA, or manually by downloading `ruled-switch-buffer` and adding the following to your init file:
 
 ```elisp
 (add-to-list 'load-path "/path/to/ruled-switch-buffer")
