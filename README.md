@@ -1,3 +1,5 @@
+[![MELPA](https://melpa.org/packages/ruled-switch-buffer-badge.svg)](https://melpa.org/#/ruled-switch-buffer)
+
 # Rule Based Switch Buffers for Emacs
 Switch paired files (ex; production code and test code) quickly based rules that written by yourself.
 
